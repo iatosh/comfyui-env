@@ -1,0 +1,14 @@
+# Pixi
+.pixi/
+pixi.lock
+
+# Generated directories
+ComfyUI/
+models/
+outputs/
+inputs/
+workflows/
+workflow_backups/
+
+# OS
+.DS_Store
