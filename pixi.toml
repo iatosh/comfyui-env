@@ -18,7 +18,6 @@ curl = "*"
 numpy = "<2"
 scipy = "*"
 pillow = "*"
-opencv = "*"
 
 [system-requirements]
 cuda = "12"
