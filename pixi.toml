@@ -7,16 +7,21 @@ platforms = ["linux-64"]
 
 [dependencies]
 python = "3.11.*"
-pytorch = "2.3.*"
-torchvision = "0.18.*"
-torchaudio = "2.3.*"
-pytorch-cuda = "12.1.*"
+pytorch = "*"
+torchvision = "*"
+torchaudio = "*"
+pytorch-cuda = "12.*"
 git = "*"
+gitpython = "*"  # ComfyUI-Manager用
 wget = "*"
 curl = "*"
+numpy = "<2"
+scipy = "*"
+pillow = "*"
+opencv = "*"
 
 [system-requirements]
-cuda = "12.1"  # ← これも追加！
+cuda = "12"
 
 [tasks]
 # セットアップ
@@ -68,30 +73,3 @@ backup = "bash scripts/backup_workflows.sh"
 monitor = "bash scripts/monitor_gpu.sh"
 logs = "tail -f ComfyUI/comfyui.log 2>/dev/null || echo 'ComfyUIを起動してください'"
 list-models = "bash scripts/list_models.sh"
-
-[pypi-dependencies]
-comfyui-frontend-package = "==1.23.4"
-comfyui-workflow-templates = "==0.1.40"
-comfyui-embedded-docs = "==0.2.4"
-torchsde = ">=0.2.6, <0.3"
-numpy = ">=1.25.0"
-einops = ">=0.8.1, <0.9"
-transformers = ">=4.37.2"
-tokenizers = ">=0.13.3"
-sentencepiece = ">=0.2.0, <0.3"
-safetensors = ">=0.4.2"
-aiohttp = ">=3.11.8"
-yarl = ">=1.18.0"
-pyyaml = "*"
-pillow = "*"
-scipy = ">=1.16.0, <2"
-tqdm = ">=4.67.1, <5"
-psutil = ">=7.0.0, <8"
-alembic = ">=1.16.4, <2"
-sqlalchemy = ">=2.0.41, <3"
-kornia = ">=0.7.1"
-spandrel = ">=0.4.1, <0.5"
-soundfile = ">=0.13.1, <0.14"
-av = ">=14.2.0"
-pydantic = "~=2.0"
-pydantic-settings = "~=2.0"
