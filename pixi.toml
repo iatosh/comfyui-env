@@ -1,0 +1,97 @@
+[project]
+name = "comfyui-env"
+version = "0.1.0"
+description = "ComfyUI with RTX 6000 Ada x3"
+channels = ["nvidia", "pytorch", "conda-forge"]  # ← nvidiaを最初に！
+platforms = ["linux-64"]
+
+[dependencies]
+python = "3.11.*"
+pytorch = "2.3.*"
+torchvision = "0.18.*"
+torchaudio = "2.3.*"
+pytorch-cuda = "12.1.*"
+git = "*"
+wget = "*"
+curl = "*"
+
+[system-requirements]
+cuda = "12.1"  # ← これも追加！
+
+[tasks]
+# セットアップ
+install = "bash scripts/install_comfyui.sh"
+setup-dirs = "bash scripts/setup_directories.sh"
+
+# 最高品質重視（FP32フル精度）
+start = """cd ComfyUI && python main.py \
+    --listen 0.0.0.0 \
+    --port 8188 \
+    --highvram \
+    --force-fp32 \
+    --fp32-vae \
+    --fp32-text-enc \
+    --cuda-malloc \
+    --use-pytorch-cross-attention"""
+
+# バランス型（BF16使用で速度と品質のバランス）
+start-balanced = """cd ComfyUI && python main.py \
+    --listen 0.0.0.0 \
+    --port 8188 \
+    --highvram \
+    --bf16-unet \
+    --fp32-vae \
+    --cuda-malloc \
+    --use-pytorch-cross-attention"""
+
+# 高速重視（FP8使用 - Ada専用最適化）
+start-fast = """cd ComfyUI && python main.py \
+    --listen 0.0.0.0 \
+    --port 8188 \
+    --highvram \
+    --fast \
+    --cuda-malloc \
+    --use-pytorch-cross-attention"""
+
+start-ultimate = "bash scripts/start_ultimate_quality.sh"
+
+# モデル・ノード管理
+download-model = "python scripts/download_model.py"
+install-node = "bash scripts/install_node.sh"
+
+# メンテナンス
+update = "bash scripts/update_all.sh"
+clean = "bash scripts/clean_cache.sh"
+backup = "bash scripts/backup_workflows.sh"
+
+# 監視・デバッグ
+monitor = "bash scripts/monitor_gpu.sh"
+logs = "tail -f ComfyUI/comfyui.log 2>/dev/null || echo 'ComfyUIを起動してください'"
+list-models = "bash scripts/list_models.sh"
+
+[pypi-dependencies]
+comfyui-frontend-package = "==1.23.4"
+comfyui-workflow-templates = "==0.1.40"
+comfyui-embedded-docs = "==0.2.4"
+torchsde = ">=0.2.6, <0.3"
+numpy = ">=1.25.0"
+einops = ">=0.8.1, <0.9"
+transformers = ">=4.37.2"
+tokenizers = ">=0.13.3"
+sentencepiece = ">=0.2.0, <0.3"
+safetensors = ">=0.4.2"
+aiohttp = ">=3.11.8"
+yarl = ">=1.18.0"
+pyyaml = "*"
+pillow = "*"
+scipy = ">=1.16.0, <2"
+tqdm = ">=4.67.1, <5"
+psutil = ">=7.0.0, <8"
+alembic = ">=1.16.4, <2"
+sqlalchemy = ">=2.0.41, <3"
+kornia = ">=0.7.1"
+spandrel = ">=0.4.1, <0.5"
+soundfile = ">=0.13.1, <0.14"
+av = ">=14.2.0"
+pydantic = "~=2.0"
+pydantic-settings = "~=2.0"
