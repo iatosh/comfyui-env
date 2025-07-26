@@ -30,10 +30,4 @@ done
 cd ..
 bash scripts/setup_directories.sh
 
-# ComfyUI-Manager
-echo "📌 Installing ComfyUI-Manager..."
-cd ComfyUI/custom_nodes
-git clone https://github.com/ltdrdata/ComfyUI-Manager.git || true
-cd ../..
-
 echo "✅ Installation completed!"
